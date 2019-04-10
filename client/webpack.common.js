@@ -5,14 +5,14 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin');
 
 module.exports = {
     entry: {
-        app: './src/app.js',
+        app: './src/App.js',
         vender: [ 
             'react', 'react-dom', 'redux', 
             'react-redux', 'react-router-dom', 
             'axios', 'prop-types' ]
     },
     output: {
-        path: path.resolve(__dirname, '../docs/'),
+        path: path.resolve(__dirname, '../docs'),
         filename: "js/[name].[chunkhash].js"
     },
     module: {
