@@ -30,7 +30,7 @@ export function signUserIn(data) {
                 dispatch({type: AUTH_USER})
                 localStorage.setItem('auth_jwt_token', res.data.token);
                 //==================== change this window location to daily================================
-                window.location = '/#daily';
+                window.location = '/minimalist-journaling/#daily';
                 axios.defaults.headers.common['Authorization'] = localStorage.getItem('auth_jwt_token');
             })
             .catch(error => {
@@ -49,7 +49,7 @@ export function signUserUp(userObj) {
                 dispatch({type: AUTH_USER})
                 localStorage.setItem('auth_jwt_token', res.data.token);
                 //==================== change this window location to daily================================
-                window.location = '/#daily';
+                window.location = '/minimalist-journaling/#daily';
                 axios.defaults.headers.common['Authorization'] = localStorage.getItem('auth_jwt_token');
             })
             .catch(error => {
@@ -85,7 +85,7 @@ export function getUserProfile() {
             .get(`/api/userProfile`)
             .then(res => {
 
-                window.location = '/#account';
+                window.location = '/minimalist-journaling/#account';
                 axios.defaults.headers.common['Authorization'] = localStorage.getItem('auth_jwt_token');
                 dispatch({
                     type: GET_USER_PROFILE,
@@ -124,7 +124,7 @@ export function getDailies() {
             .get(`/api/daily`)
             .then(res => {
 
-                window.location = '/#daily';
+                window.location = '/minimalist-journaling/#daily';
                 axios.defaults.headers.common['Authorization'] = localStorage.getItem('auth_jwt_token');
                 dispatch({
                     type: GET_USER_DAILY,
@@ -205,7 +205,7 @@ export function getWeeklies() {
             .get(`/api/weekly`)
             .then(res => {
 
-                window.location = '/#weekly';
+                window.location = '/minimalist-journaling/#weekly';
                 axios.defaults.headers.common['Authorization'] = localStorage.getItem('auth_jwt_token');
                 dispatch({
                     type: GET_USER_WEEKLY,
@@ -280,7 +280,7 @@ export function getMonthlies() {
             .get(`/api/monthly`)
             .then(res => {
 
-                window.location = '/#monthly';
+                window.location = '/minimalist-journaling/#monthly';
                 axios.defaults.headers.common['Authorization'] = localStorage.getItem('auth_jwt_token');
                 dispatch({
                     type: GET_USER_MONTHLY,
