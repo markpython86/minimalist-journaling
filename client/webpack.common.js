@@ -6,10 +6,11 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin');
 module.exports = {
     entry: {
         app: './src/App.js',
-        vender: [ 
-            'react', 'react-dom', 'redux', 
-            'react-redux', 'react-router-dom', 
-            'axios', 'prop-types' ]
+        vender: [
+            'react', 'react-dom', 'redux',
+            'react-redux', 'react-router-dom',
+            'axios', 'prop-types','lodash', 'material-components-web' , 'material-ui-pickers'
+            , 'moment']
     },
     output: {
         path: path.resolve(__dirname, '../docs'),
@@ -32,13 +33,13 @@ module.exports = {
                         options: {
                             sourceMap: true
                         }
-                    },'sass-loader'],
+                    }, 'sass-loader'],
                 })
             }
         ]
     },
     plugins: [
-        new HtmlWebpackPlugin({template: path.resolve(__dirname, 'src/index.html')}),
+        new HtmlWebpackPlugin({ template: path.resolve(__dirname, 'src/index.html') }),
         new webpack.optimize.CommonsChunkPlugin({
             name: 'manifest',
             filename: "manifest.js",
