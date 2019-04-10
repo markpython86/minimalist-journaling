@@ -30,7 +30,7 @@ export function signUserIn(data) {
                 dispatch({type: AUTH_USER})
                 localStorage.setItem('auth_jwt_token', res.data.token);
                 //==================== change this window location to daily================================
-                window.location = '/minimalist-journaling/#daily';
+                window.location.href = '/#daily';
                 axios.defaults.headers.common['Authorization'] = localStorage.getItem('auth_jwt_token');
             })
             .catch(error => {
@@ -49,7 +49,7 @@ export function signUserUp(userObj) {
                 dispatch({type: AUTH_USER})
                 localStorage.setItem('auth_jwt_token', res.data.token);
                 //==================== change this window location to daily================================
-                window.location = '/minimalist-journaling/#daily';
+                window.location.href = '/#daily';
                 axios.defaults.headers.common['Authorization'] = localStorage.getItem('auth_jwt_token');
             })
             .catch(error => {
@@ -85,7 +85,7 @@ export function getUserProfile() {
             .get(`/api/userProfile`)
             .then(res => {
 
-                window.location = '/minimalist-journaling/#account';
+                window.location.href = '/#account';
                 axios.defaults.headers.common['Authorization'] = localStorage.getItem('auth_jwt_token');
                 dispatch({
                     type: GET_USER_PROFILE,
@@ -104,7 +104,7 @@ export function updateUserProfile(profile) {
                 dispatch({
                     type: UPDATE_USER_PROFILE_GOOD
                 })
-                window.location.reload(true);
+                window.location.href.reload(true);
             })
             .catch(error => {
                 console.log(error.response.data)
@@ -124,7 +124,7 @@ export function getDailies() {
             .get(`/api/daily`)
             .then(res => {
 
-                window.location = '/minimalist-journaling/#daily';
+                window.location.href = '/#daily';
                 axios.defaults.headers.common['Authorization'] = localStorage.getItem('auth_jwt_token');
                 dispatch({
                     type: GET_USER_DAILY,
@@ -143,7 +143,7 @@ export function postDaily(dailyObj) {
             .then(() => {
                 // console.log('\\\\\\\\\working')
                 dispatch({type: AUTH_USER})
-                 window.location.reload(true);
+                 window.location.href.reload(true);
                 // localStorage.setItem('auth_jwt_token', res.data.token);
                 //==================== change this window location to daily================================
                 
@@ -165,7 +165,7 @@ export function deleteDaily(dailyID) {
             .then(() => {
                 console.log('\\\\\\\\\working')
                 // dispatch({type: AUTH_USER})
-                 window.location.reload(true);
+                 window.location.href.reload(true);
                 // localStorage.setItem('auth_jwt_token', res.data.token);
                 //==================== change this window location to daily================================
                 
@@ -186,7 +186,7 @@ export function updateDaily(id, update) {
                 dispatch({
                     type: UPDATE_DAILY_GOOD
                 })
-                window.location.reload(true);
+                window.location.href.reload(true);
             })
             .catch(error => {
                 console.log(error)
@@ -205,7 +205,7 @@ export function getWeeklies() {
             .get(`/api/weekly`)
             .then(res => {
 
-                window.location = '/minimalist-journaling/#weekly';
+                window.location.href = '/#weekly';
                 axios.defaults.headers.common['Authorization'] = localStorage.getItem('auth_jwt_token');
                 dispatch({
                     type: GET_USER_WEEKLY,
@@ -223,7 +223,7 @@ export function postWeekly(weeklyObj) {
             .post(`/api/weekly/new`, weeklyObj)
             .then(() => {
                 dispatch({type: AUTH_USER})
-                 window.location.reload(true);
+                 window.location.href.reload(true);
                 // localStorage.setItem('auth_jwt_token', res.data.token);
                 
                 // axios.defaults.headers.common['Authorization'] = localStorage.getItem('auth_jwt_token');
@@ -242,7 +242,7 @@ export function deleteWeekly(weeklyID) {
             .delete(`/api/weekly/${weeklyID}`)
             .then(() => {
                 // dispatch({type: AUTH_USER})
-                 window.location.reload(true);
+                 window.location.href.reload(true);
                 // localStorage.setItem('auth_jwt_token', res.data.token);
                 
                 axios.defaults.headers.common['Authorization'] = localStorage.getItem('auth_jwt_token');
@@ -262,7 +262,7 @@ export function updateWeekly(id, update) {
                 dispatch({
                     type: UPDATE_WEEKLY_GOOD
                 })
-                window.location.reload(true);
+                window.location.href.reload(true);
             })
             .catch(error => {
                 console.log(error)
@@ -280,7 +280,7 @@ export function getMonthlies() {
             .get(`/api/monthly`)
             .then(res => {
 
-                window.location = '/minimalist-journaling/#monthly';
+                window.location.href = '/#monthly';
                 axios.defaults.headers.common['Authorization'] = localStorage.getItem('auth_jwt_token');
                 dispatch({
                     type: GET_USER_MONTHLY,
@@ -298,7 +298,7 @@ export function postMonthly(monthlyObj) {
             .post(`/api/monthly/new`, monthlyObj)
             .then(() => {
                 dispatch({type: AUTH_USER})
-                 window.location.reload(true);
+                 window.location.href.reload(true);
                 // localStorage.setItem('auth_jwt_token', res.data.token);
                 
                 // axios.defaults.headers.common['Authorization'] = localStorage.getItem('auth_jwt_token');
@@ -317,7 +317,7 @@ export function deleteMonthly(monthlyID) {
             .delete(`/api/monthly/${monthlyID}`)
             .then(() => {
                 // dispatch({type: AUTH_USER})
-                 window.location.reload(true);
+                 window.location.href.reload(true);
                 // localStorage.setItem('auth_jwt_token', res.data.token);
                 
                 axios.defaults.headers.common['Authorization'] = localStorage.getItem('auth_jwt_token');
@@ -337,7 +337,7 @@ export function updateMonthly(id, update) {
                 dispatch({
                     type: UPDATE_MONTHLY_GOOD
                 })
-                window.location.reload(true);
+                window.location.href.reload(true);
             })
             .catch(error => {
                 console.log(error)
