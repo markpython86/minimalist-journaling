@@ -1,0 +1,16 @@
+node_modules/
+bundle.js
+npm-debug.log
+yarn.lock
+package-lock.json
+
+New_folder/
+
+/.idea
+/public
+
+.passport.js
+.DS_Store
+
+build/
+dist/
