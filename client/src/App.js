@@ -62,9 +62,7 @@ ReactDOM.render(
           <Route exact path="/" component= {Home} />
           {/* <Route path="/public" component= {Public} /> */}
           <Route path="/account" component= {RequireAuth(Account)} />
-
           <Route path="/about" component= {About} />
-          
           <Route path="/signout" component= {Signout} />
           <Route path="/daily" component= {RequireAuth(Daily)} />
           <Route path="/weekly" component= {RequireAuth(Weekly)} />
