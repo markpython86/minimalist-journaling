@@ -1,12 +1,13 @@
 const webpack = require('webpack');
-const merge = require('webpack-merge');
 const path = require('path');
+const merge = require('webpack-merge');
+
 const common = require('./webpack.common.js');
 
 module.exports = merge(common, {
     devtool: 'source-map',
     devServer: {
-        contentBase: path.join(__dirname, './src'),
+        contentBase: path.join(__dirname, './src/index.html'),
         compress: true,
         port: 3000
     },
