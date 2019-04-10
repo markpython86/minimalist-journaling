@@ -6,7 +6,7 @@
   "homepage": "https://markpython86.github.io/minimalist-journaling/",
   "scripts": {
     "dev": "webpack-dev-server --open --config webpack.dev.js",
-    "start": "webpack-dev-server --open --config webpack.prod.js",
+    "start": "serve ../docs",
     "build": "rm -rf ../docs && webpack --config webpack.prod.js",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build"
