@@ -3,6 +3,7 @@
   "version": "1.0.1",
   "description": "Simple starter package for Redux with React and Babel support",
   "main": "index.js",
+  "homepage": "https://markpython86.github.io/minimalist-journaling/",
   "scripts": {
     "dev": "webpack-dev-server --open --config webpack.dev.js",
     "start": "serve ../docs",
