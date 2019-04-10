@@ -30,7 +30,7 @@ export function signUserIn(data) {
                 dispatch({type: AUTH_USER})
                 localStorage.setItem('auth_jwt_token', res.data.token);
                 //==================== change this window location to daily================================
-                window.location.href = '/minimalist-journaling/#daily';
+                window.location.href = '/#daily';
                 axios.defaults.headers.common['Authorization'] = localStorage.getItem('auth_jwt_token');
             })
             .catch(error => {
