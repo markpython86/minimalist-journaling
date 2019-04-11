@@ -30,7 +30,7 @@ export function signUserIn(data) {
                 dispatch({type: AUTH_USER})
                 localStorage.setItem('auth_jwt_token', res.data.token);
                 //==================== change this window location to daily================================
-                res.redirect('/#daily');
+                window.location.href = '/#daily';
                 axios.defaults.headers.common['Authorization'] = localStorage.getItem('auth_jwt_token');
             })
             .catch(error => {
@@ -49,7 +49,7 @@ export function signUserUp(userObj) {
                 dispatch({type: AUTH_USER})
                 localStorage.setItem('auth_jwt_token', res.data.token);
                 //==================== change this window location to daily================================
-                window.location.redirect = '/#daily';
+                window.location.href = '/#daily';
                 axios.defaults.headers.common['Authorization'] = localStorage.getItem('auth_jwt_token');
             })
             .catch(error => {
@@ -85,12 +85,12 @@ export function getUserProfile() {
             .get(`/api/userProfile`)
             .then(res => {
 
-                window.location.href = '/#account';
                 axios.defaults.headers.common['Authorization'] = localStorage.getItem('auth_jwt_token');
                 dispatch({
                     type: GET_USER_PROFILE,
                     payload: res.data
                 })
+                window.location.href = '/#account';
             })
             .catch(error => console.log(error.response.data));
     }
@@ -124,8 +124,8 @@ export function getDailies() {
             .get(`/api/daily`)
             .then(res => {
 
-                window.location.href = '/#daily';
                 axios.defaults.headers.common['Authorization'] = localStorage.getItem('auth_jwt_token');
+                window.location.href = '/#daily';
                 dispatch({
                     type: GET_USER_DAILY,
                     payload: res.data

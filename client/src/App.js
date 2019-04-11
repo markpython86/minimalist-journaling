@@ -45,28 +45,28 @@ ReactDOM.render(
               <Home />
             )
           )}/> */}
-          <Route exact path="/#signin" render={() => (
+          <Route exact path="/signin" render={() => (
             token ? (
-              <Redirect to="/#daily"/>
+              <Redirect to="/daily"/>
             ) : (
               <Signin />
             )
           )}/>
-          <Route exact path="/#signup" render={() => (
+          <Route exact path="/signup" render={() => (
             token ? (
-            <Redirect to="/#daily"/>
+            <Redirect to="/daily"/>
             ) : (
               <Signup />
             )
           )}/>
           <Route exact path="/" component= {Home} />
           {/* <Route path="/public" component= {Public} /> */}
-          <Route path="/#account" component= {RequireAuth(Account)} />
-          <Route path="/#about" component= {About} />
-          <Route path="/#signout" component= {Signout} />
-          <Route path="/#daily" component= {RequireAuth(Daily)} />
-          <Route path="/#weekly" component= {RequireAuth(Weekly)} />
-          <Route path="/#monthly" component= {RequireAuth(Monthly)} /> 
+          <Route path="/account" component= {RequireAuth(Account)} />
+          <Route path="/about" component= {About} />
+          <Route path="/signout" component= {Signout} />
+          <Route path="/daily" component= {RequireAuth(Daily)} />
+          <Route path="/weekly" component= {RequireAuth(Weekly)} />
+          <Route path="/monthly" component= {RequireAuth(Monthly)} /> 
           {/* <Route path="/ui" component= {App1} /> */}
           
 
