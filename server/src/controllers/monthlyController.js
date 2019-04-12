@@ -22,11 +22,11 @@ export default {
     },
 //     
 
-createWeekly: (req, res, next) => {
+createMonthly: (req, res, next) => {
 //         
 
         User.findById({_id: req.user._id})
-        .populate({path: 'weekly', options: { sort: { 'week': 1 } } })
+        .populate({path: 'monthly', options: { sort: { 'month': 1 } } })
         .then(weekly => {
 
         })
