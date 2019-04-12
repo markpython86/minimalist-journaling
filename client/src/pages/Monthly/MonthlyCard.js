@@ -17,7 +17,6 @@ import TextField from '@material-ui/core/TextField';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import { Flag, ArrowUpward, ArrowDownward, AlarmOn, AccessibilityNew, Book, Build, Code, EventSeat, Explore, Motorcycle, Pets, QuestionAnswer, Rowing, ShoppingCart, Search, Today, SwapVert, WatchLater, Work, Mic, Movie, Call, Email, SentimentSatisfied, Waves, Weekend, AttachMoney, Headset, ColorLens, Brush, Camera, Edit, Landscape, LinkedCamera, Timer, DirectionsBike, DirectionsBus, DirectionsCar, DirectionsRun, DirectionsRailway, LocalLaundryService, LocalActivity, LocalAtm, LocalBar, LocalCafe, LocalCarWash, LocalDining, LocalDrink, LocalHotel, ChildFriendly, Pool, Spa, SmokeFree, FreeBreakfast, GolfCourse, Casino, FitnessCenter, Kitchen, School, LocalLibrary, Watch, } from '@material-ui/icons/';
- 
 import "./MonthlyCard.css";
 
 const styles = theme => ({
@@ -240,7 +239,14 @@ class MonthlyCard extends React.Component {
       <ClickAwayListener onClickAway={this.handleClickAway}>
 
       <Grid item>
-  {!this.state.isHidden && <Child props={props} editMode={this.editMode} loadMonthlies={this.loadMonthlies} notEditMode={this.notEditMode} deleteMonthly={this.deleteMonthly} hideIcons={this.hideIcons} newState={newState}  />}
+  {!this.state.isHidden && <Child 
+      props={props}  
+      editMode={this.editMode} 
+      loadMonthlies={this.loadMonthlies} 
+      notEditMode={this.notEditMode} 
+      deleteMonthly={this.deleteMonthly} 
+      hideIcons={this.hideIcons} 
+      newState={newState}  />}
 
       <Card onClick={this.toggleHidden.bind(this)} className={classes.root} id="card">
         <CardContent className={classes.root}>

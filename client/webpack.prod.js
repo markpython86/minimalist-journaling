@@ -9,6 +9,7 @@ module.exports = merge(common, {
             'process.env': {
                 'NODE_ENV': JSON.stringify('production'),
                 'API_URI': JSON.stringify('https://minimalist-journaling.herokuapp.com/')
+                // https://minimalist-journaling.herokuapp.com/
             },
         }),
     ]

@@ -70,7 +70,7 @@ export default {
                     Weekly.findOneAndUpdate({ user_id: req.user._id, month: newDaily.month,week: newDaily.week, year: newDaily.year },
                         { $push: { habits: { $each: [newDaily.habit1, newDaily.habit2, newDaily.habit3] } } })
                         .then(d => {
-                            console.log('llllllllllllll', d)
+                            console.log('llllllllllllll', newDaily)
                             const habits = []
                             habits.push(newDaily.habit1, newDaily.habit2, newDaily.habit3)
                             if (d == null) {
@@ -168,6 +168,7 @@ export default {
     updateDaily: (req, res, next) => {
         
             const dailyId = req.params.id;
+            console.log('dailyId', dailyId)
             const newDaily = {
                 ...req.body,
                 week: parseInt(Moment(req.body.selectedDate).format('w')-1),
@@ -177,33 +178,34 @@ export default {
                     new: true
                 })
                 .then(newDaily => {
-
                     Weekly.findOneAndUpdate({ user_id: req.user._id, week: newDaily.week, year: newDaily.year }
                     )
                         .then(data => {
                             Weekly.updateOne({ _id: data._id, habits: req.body.oldValues.habit1 }, { $set: { "habits.$": req.body.habit1 } })
-                                .then(data => console.log('data', data))
+                                .then()
                                 .catch(err => console.log('err', err))
                             Weekly.updateOne({ _id: data._id, habits: req.body.oldValues.habit2 }, { $set: { "habits.$": req.body.habit2 } })
-                                .then(data => console.log('data', data))
+                                .then()
                                 .catch(err => console.log('err', err))
                             Weekly.updateOne({ _id: data._id, habits: req.body.oldValues.habit3 }, { $set: { "habits.$": req.body.habit3 } })
-                                .then(data => console.log('data', data))
+                                .then()
                                 .catch(err => console.log('err', err))
                         // .catch(err => console.log('err', err));
+                       
                         }).catch(err => console.log('err', err));
                     Monthly.findOneAndUpdate({ user_id: req.user._id, month: newDaily.month, year: newDaily.year }
                     )
                         .then(data => {
-                            Monthly.updateOne({ _id: data._id, habits: req.body.oldValues.habit1 }, { $set: { "habits.$": req.body.habit1 } })
-                                .then(data => console.log('data', data))
+                            Monthly.update({ _id: data._id, habits: req.body.oldValues.habit1 }, { $set: { "habits.$": req.body.habit1 } })
+                                .then(res => console.log('res',res))
                                 .catch(err => console.log('err', err))
-                            Monthly.updateOne({ _id: data._id, habits: req.body.oldValues.habit2 }, { $set: { "habits.$": req.body.habit2 } })
-                                .then(data => console.log('data', data))
+                            Monthly.update({ _id: data._id, habits: req.body.oldValues.habit2 }, { $set: { "habits.$": req.body.habit2 } })
+                                .then()
                                 .catch(err => console.log('err', err))
-                            Monthly.updateOne({ _id: data._id, habits: req.body.oldValues.habit3 }, { $set: { "habits.$": req.body.habit3 } })
-                                .then(data => console.log('data', data))
+                            Monthly.update({ _id: data._id, habits: req.body.oldValues.habit3 }, { $set: { "habits.$": req.body.habit3 } })
+                                .then()
                                 .catch(err => console.log('err', err))
+                                console.log('data motnh', req.body.habit1)
                         })
 
                         .catch(err => console.log('err', err))

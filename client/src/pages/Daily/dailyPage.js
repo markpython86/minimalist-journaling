@@ -11,8 +11,8 @@ import FAB from "../FAB/FAB";
 import Palette from "../Grid/Palette";
 import Container from "../Grid/Container";
 import Item from "../Grid/Item";
-// import MenuAppBar from "../../components/Nav/";
-import DailyCard from "../Daily/DailyCard";
+import Nav from "../../components/Nav";
+import DailyCard from "./DailyCard";
 
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
@@ -198,19 +198,20 @@ class App extends Component {
     handleFormSubmit = (data) => {
       if(this.state.dailies.find(daily => daily.fullDate === data.fullDate)) {
         this.errorMessage();
-      } else {
-        API.saveDaily(data)
-        .then(() => {
+              } else {
+                
+      API.saveDaily(data)
+        .then(()=>{
           this.loadDaily()
           this.savedMessage()
         })
-          .catch(err => console.log(err));
+        .catch(err => console.log(err))
       }
     };
 
 
   render() {
-    // const {handleSubmit} = this.props;
+    const {handleSubmit} = this.props;
 
     const { classes } = this.props;
 
@@ -308,11 +309,6 @@ function mapStateToProps({auth}) {
         errorMsg: auth.error
     }
 }
-
-
-// App.propTypes = {
-//   classes: PropTypes.object.isRequired,
-// };
 
 
 export default connect(mapStateToProps,{ postDaily })(reduxForm({

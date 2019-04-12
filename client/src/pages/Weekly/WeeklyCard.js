@@ -241,7 +241,14 @@ class WeeklyCard extends React.Component {
       <ClickAwayListener onClickAway={this.handleClickAway}>
 
       <Grid item>
-  {!this.state.isHidden && <Child props={props} editMode={this.editMode} loadWeeklies={this.loadWeeklies} notEditMode={this.notEditMode} deleteWeekly={this.deleteWeekly} hideIcons={this.hideIcons} newState={newState} />}
+  {!this.state.isHidden && <Child 
+      props={props} 
+      editMode={this.editMode} 
+      loadWeeklies={this.loadWeeklies} 
+      notEditMode={this.notEditMode} 
+      deleteWeekly={this.deleteWeekly} 
+      hideIcons={this.hideIcons} 
+      newState={newState} />}
 
       <Card onClick={this.toggleHidden.bind(this)} className={classes.root} id="card">
         <CardContent className={classes.root}>

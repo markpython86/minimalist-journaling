@@ -10,9 +10,7 @@ import FAB from "../FAB/FAB";
 import Palette from "../Grid/Palette";
 import Container from "../Grid/Container";
 import Item from "../Grid/Item";
-import Nav from "../../components/Nav";
-
-
+// import Nav from "../../components/Nav";
 import MonthlyCard from "./MonthlyCard";
 
 import PropTypes from 'prop-types';
@@ -118,6 +116,7 @@ class App extends Component {
     super();
     this.state = {
       monthlies: [],
+      weeklies: [],
       dailies:[],
        savedMessage: false,
       deletedMessage: false,
@@ -127,7 +126,7 @@ class App extends Component {
   }
 
 
-  componentDidMount() {
+  componentWillMount() {
     this.loadMonthlies();
   }
 
@@ -167,12 +166,6 @@ handleErrorMessage = (event, reason) => {
   this.setState({ errorMessage: false });
 };
 
-loadDaily = () => {
-  API.getDailies()
-  .then()
-  .catch(err => console.log(err))
-}
-
 
 
 
@@ -184,6 +177,7 @@ loadDaily = () => {
       .then(res => {
         this.setState({ 
           monthlies: res.data.monthly,
+          weeklies: res.data.weekly,
           dailies: res.data.daily
         })
       })
@@ -202,7 +196,8 @@ deleteMonthlies = (id) => {
   updateMonthlies = (id, update) => {
       API.updateMonthly(id, update)
       .then(() =>  
-      {this.loadMonthlies()
+      {
+      this.loadMonthlies()
       this.savedMessage()
       })
       .catch(err => console.log(err));
@@ -210,11 +205,7 @@ deleteMonthlies = (id) => {
 
     handleFormSubmit = (data) => {
       if(this.state.dailies.find(daily => daily.fullDate === data.fullDate)) {
-        this.errorMessage();        // API.saveDaily(data)
-                //   .then(() => this.loadDaily())
-                //   .catch(err => console.log(err));
-        
-        
+        this.errorMessage();
               } else {
                 
       API.saveDaily(data)
@@ -297,7 +288,6 @@ deleteMonthlies = (id) => {
                   index={person._id}
                   deleteMonthly = {this.deleteMonthlies}
                   updatedMonthly={this.updateMonthlies}
-                  preUpdate={this.updateMonthlies}
                   updates={person}
                   remember={person.remember}
                   start={person.start}
