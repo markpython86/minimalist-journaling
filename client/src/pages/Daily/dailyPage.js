@@ -11,8 +11,8 @@ import FAB from "../FAB/FAB";
 import Palette from "../Grid/Palette";
 import Container from "../Grid/Container";
 import Item from "../Grid/Item";
-import Nav from "../../components/Nav";
-import DailyCard from "./DailyCard";
+// import MenuAppBar from "../../components/Nav/";
+import DailyCard from "../Daily/DailyCard";
 
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
@@ -127,9 +127,15 @@ class App extends Component {
     }
   }
 
-  componentWillMount() {
+  componentDidMount() {
+    
+    // this.props.tryConnect();
     this.loadDaily();
   }
+  // componentWillMount(){
+  //   this.loadDailies();
+  // }
+
 
   savedMessage = () => {
     this.setState({ savedMessage: true });
@@ -185,8 +191,10 @@ class App extends Component {
        })
 
       .catch(err => console.log(err));
-  };
+  }
+
   updateDailies = (id, update) => {
+    console.log(update)
       API.updateDaily(id, update)
       .then(() => {
         this.loadDaily()
@@ -198,20 +206,19 @@ class App extends Component {
     handleFormSubmit = (data) => {
       if(this.state.dailies.find(daily => daily.fullDate === data.fullDate)) {
         this.errorMessage();
-              } else {
-                
-      API.saveDaily(data)
-        .then(()=>{
+      } else {
+        API.saveDaily(data)
+        .then(() => {
           this.loadDaily()
           this.savedMessage()
         })
-        .catch(err => console.log(err))
+          .catch(err => console.log(err));
       }
     };
 
 
   render() {
-    const {handleSubmit} = this.props;
+    // const {handleSubmit} = this.props;
 
     const { classes } = this.props;
 
@@ -276,7 +283,6 @@ class App extends Component {
                   index={person._id}
                   deleteDaily = {this.deleteDailies}
                   updatedDaily={this.updateDailies}
-                  preUpdate={this.updateDailies}
                   updates={person}
                   Highlights={person.highlights}
                   positive={person.positive}
@@ -309,6 +315,11 @@ function mapStateToProps({auth}) {
         errorMsg: auth.error
     }
 }
+
+
+// App.propTypes = {
+//   classes: PropTypes.object.isRequired,
+// };
 
 
 export default connect(mapStateToProps,{ postDaily })(reduxForm({

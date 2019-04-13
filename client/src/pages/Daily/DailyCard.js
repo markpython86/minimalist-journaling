@@ -3,8 +3,6 @@ import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
-import Typography from '@material-ui/core/Typography';
-import Badge from '@material-ui/core/Badge';
 import Grid from '@material-ui/core/Grid';
 import Fab from '@material-ui/core/Fab';
 import Icon from '@material-ui/core/Icon';
@@ -245,14 +243,7 @@ class DailyCard extends React.Component {
       <ClickAwayListener onClickAway={this.handleClickAway}>
 
       <Grid item>
-  {!this.state.isHidden && <Child 
-      props={props} 
-      loadDailies={this.loadDailies}
-      deleteDaily={this.deleteDaily}
-      hideIcons={this.hideIcons} 
-      editMode={this.editMode} 
-      notEditMode={this.notEditMode} 
-      newState={newState} />}
+  {!this.state.isHidden && <Child props={props} loadDailies={this.loadDailies} deleteDaily={this.deleteDaily} hideIcons={this.hideIcons} editMode={this.editMode} notEditMode={this.notEditMode} newState={newState} />}
 
       <Card onClick={this.toggleHidden.bind(this)} className={classes.root} id="card">
         <CardContent className={classes.root}>
@@ -996,34 +987,70 @@ WrappedFab.muiName = "Fab";
 
 const Child = props => (
   <Grid container className="fab">
-  <Grid item xs={4}>
-    <Fab onClick={() => {
+    <Grid item xs={4}>
+      <Tooltip disableFocusListener title="Save" placement="top">
+        <WrappedFab
+          onClick={() => {
           props.notEditMode();
           props.props.updatedDaily(props.props.index, props.newState);
           props.hideIcons();          
-          }} size="small" id="saveButton" aria-label="Check" color='secondary'>
-      <Icon  fontSize="small">check_icon</Icon> 
-    </Fab>
-  </Grid>
+          }}
+          size="small"
+          id="checkButton"
+          aria-label="Check"
+          color="secondary"
+        >
+          <Icon fontSize="small">check_icon</Icon>
+          {/* props.props.updatedDaily(props.props.index, ) */}
+          {/* props.props.updatedDaily(props.props.index, {props.newState.}) */}
+        </WrappedFab>
+      </Tooltip>
+    </Grid>
 
-  <Grid item xs={4}>
-    <Fab onClick={() => {props.editMode()}} size="small" id="editButton" aria-label="Edit" color='primary'>
-      <Icon  fontSize="small">edit_icon</Icon>
-    </Fab>
-  </Grid>
+    <Grid item xs={4}>
+      <Tooltip disableFocusListener title="Edit" placement="top">
+        <WrappedFab
+          onClick={() => {
+            props.editMode();
+          }}
+          size="small"
+          id="editButton"
+          aria-label="Edit"
+          color="primary"
+        >
+          <Icon fontSize="small">edit_icon</Icon>
+        </WrappedFab>
+      </Tooltip>
+    </Grid>
+    
+    <Grid item xs={4}>
+     <Tooltip disableFocusListener title="Delete" placement="top">
 
-  <Grid item xs={4}>
-    <Fab onClick={() => {
+      <WrappedFab
+        onClick={() => {
           props.props.deleteDaily(props.props.index),
           props.hideIcons()
-        }} size="small" id="deleteButton" aria-label="Delete">
-      <Icon  fontSize="small">delete_icon</Icon>
-    </Fab>
-  </Grid>
+        }}
+        size="small"
+        id="deleteButton"
+        aria-label="Delete"
+      >
+        <Icon fontSize="small">delete_icon</Icon>
+      </WrappedFab>
+      </Tooltip>
+    </Grid>
   </Grid>
 );
 
+// onClick={() => 
+//   {
+//     this.props.submit(newState),
+//     this.handleClose(),
+//     this.props.loadDailies();
+    
+//   }}
 
+// End of hidden FAB buttons.
 
 DailyCard.propTypes = {
   classes: PropTypes.object.isRequired,

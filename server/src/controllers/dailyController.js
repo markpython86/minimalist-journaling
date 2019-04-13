@@ -3,7 +3,6 @@ import User from '../models/user';
 import Daily from '../models/Daily';
 import Weekly from '../models/Weekly';
 import Monthly from '../models/Monthly';
-
 const Moment = require('moment');
 // import dailyController from './dailyController'
 
@@ -67,13 +66,13 @@ export default {
         }).then(newDaily => {
             User.findByIdAndUpdate({ _id: req.user._id }, { $push: { daily: newDaily._id } })
                 .then((data) => {
-                    Weekly.findOneAndUpdate({ user_id: req.user._id, month: newDaily.month,week: newDaily.week, year: newDaily.year },
+                    Weekly.findOneAndUpdate({ user_id: req.user._id,week: newDaily.week, year: newDaily.year },
                         { $push: { habits: { $each: [newDaily.habit1, newDaily.habit2, newDaily.habit3] } } })
                         .then(d => {
-                            console.log('llllllllllllll', newDaily)
+                            console.log('llllllllllllll', d)
                             const habits = []
                             habits.push(newDaily.habit1, newDaily.habit2, newDaily.habit3)
-                            if (d == null) {
+                            if (d === null) {
 
                                 const weekly = new Weekly({
                                     weekStart: Moment(req.body.selectedDate).startOf('week').format('MM/DD'),
@@ -97,15 +96,15 @@ export default {
                                 }).then(newWeekly => {
                                     console.log('-=-=-=-==-', newWeekly)
                                     User.findByIdAndUpdate({ _id: req.user._id }, { $push: { weekly: newWeekly._id } })
-                                        .then()
+                                        .then(d => console.log(d))
                                         .catch(err => console.log(err))
 
                                 })
                                     .catch(next)
-                            }
+                            } 
 
-                        })
-                        .catch(err => console.log(err))
+                        }).catch(err => console.log(err))
+                        
                     // res.
                     Monthly.findOneAndUpdate({ user_id: req.user._id, month: newDaily.month, year: newDaily.year },
                         { $push: { habits: { $each: [newDaily.habit1, newDaily.habit2, newDaily.habit3] } } })
@@ -132,12 +131,13 @@ export default {
                                         return next(err)
                                     }
                                 }).then(newMonthly => {
+                                    console.log('-=-=-=-==-', newMonthly)
                                     User.findByIdAndUpdate({ _id: req.user._id }, { $push: { monthly: newMonthly._id } })
-                                        .then()
+                                        .then(d => console.log(d))
                                         .catch(err => console.log(err))
 
-                                })
-                                    .catch(next)
+                                }).catch(next)
+                                    
                             }
 
                         })
@@ -168,47 +168,44 @@ export default {
     updateDaily: (req, res, next) => {
         
             const dailyId = req.params.id;
-            console.log('dailyId', dailyId)
             const newDaily = {
                 ...req.body,
                 week: parseInt(Moment(req.body.selectedDate).format('w')-1),
                 year: parseInt(Moment(req.body.selectedDate).format('YYYY'))}
+               
                 
-            Daily.findByIdAndUpdate(dailyId, newDaily, {
-                    new: true
-                })
+            Daily.findByIdAndUpdate(dailyId, newDaily)
                 .then(newDaily => {
-                    Weekly.findOneAndUpdate({ user_id: req.user._id, week: newDaily.week, year: newDaily.year }
+                    console.log('hello id',newDaily.user_id)
+                    Weekly.findOne({ user_id: newDaily.user_id}
                     )
                         .then(data => {
+                            console.log('data of week after', data)
                             Weekly.updateOne({ _id: data._id, habits: req.body.oldValues.habit1 }, { $set: { "habits.$": req.body.habit1 } })
-                                .then(res => console.log('res',res))
+                                .then(res => console.log(res))
                                 .catch(err => console.log('err', err))
                             Weekly.updateOne({ _id: data._id, habits: req.body.oldValues.habit2 }, { $set: { "habits.$": req.body.habit2 } })
-                                .then(res => console.log('res',res))
+                                .then(res => console.log(res))
                                 .catch(err => console.log('err', err))
                             Weekly.updateOne({ _id: data._id, habits: req.body.oldValues.habit3 }, { $set: { "habits.$": req.body.habit3 } })
-                                .then(res => console.log('res',res))
+                                .then(res => console.log(res))
                                 .catch(err => console.log('err', err))
-                        // .catch(err => console.log('err', err));
-                       
+                        
                         }).catch(err => console.log('err', err));
-                    Monthly.findOneAndUpdate({ user_id: req.user._id, month: newDaily.month, year: newDaily.year }
+                    Monthly.findOne({ user_id: newDaily.user_id }
                     )
                         .then(data => {
-                            Monthly.update({ _id: data._id, habits: req.body.oldValues.habit1 }, { $set: { "habits.$": req.body.habit1 } })
-                                .then(res => console.log('res',res))
+                            console.log('data of week after', data)
+                            Monthly.updateOne({ _id: data._id, habits: req.body.oldValues.habit1 }, { $set: { "habits.$": req.body.habit1 } })
+                                .then(res => console.log(res))
                                 .catch(err => console.log('err', err))
-                            Monthly.update({ _id: data._id, habits: req.body.oldValues.habit2 }, { $set: { "habits.$": req.body.habit2 } })
-                                .then(res => console.log('res',res))
+                            Monthly.updateOne({ _id: data._id, habits: req.body.oldValues.habit2 }, { $set: { "habits.$": req.body.habit2 } })
+                                .then(res => console.log(res))
                                 .catch(err => console.log('err', err))
-                            Monthly.update({ _id: data._id, habits: req.body.oldValues.habit3 }, { $set: { "habits.$": req.body.habit3 } })
-                                .then(res => console.log('res',res))
+                            Monthly.updateOne({ _id: data._id, habits: req.body.oldValues.habit3 }, { $set: { "habits.$": req.body.habit3 } })
+                                .then(res => console.log(res))
                                 .catch(err => console.log('err', err))
-                                console.log('data motnh', req.body.habit1)
-                        })
-
-                        .catch(err => console.log('err', err))
+                        }).catch(err => console.log('err', err))
                     res.sendStatus(200);
                 })
             .catch(next)
