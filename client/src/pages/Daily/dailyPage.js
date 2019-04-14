@@ -132,9 +132,6 @@ class App extends Component {
     // this.props.tryConnect();
     this.loadDaily();
   }
-  // componentWillMount(){
-  //   this.loadDailies();
-  // }
 
 
   savedMessage = () => {
@@ -194,7 +191,6 @@ class App extends Component {
   }
 
   updateDailies = (id, update) => {
-    console.log(update)
       API.updateDaily(id, update)
       .then(() => {
         this.loadDaily()
@@ -203,23 +199,21 @@ class App extends Component {
       .catch(err => console.log(err));
   }; 
 
-    handleFormSubmit = (data) => {
-      if(this.state.dailies.find(daily => daily.fullDate === data.fullDate)) {
-        this.errorMessage();
-      } else {
-        API.saveDaily(data)
-        .then(() => {
-          this.loadDaily()
-          this.savedMessage()
-        })
+  handleFormSubmit = (data) => {
+    if(this.state.dailies.find(daily => daily.fullDate === data.fullDate)){
+      this.errorMessage()
+    } else{
+      API.saveDaily(data)
+          .then(() => {
+            this.loadDaily()
+            this.savedMessage()
+          })
           .catch(err => console.log(err));
-      }
-    };
+    }
+  };
 
 
   render() {
-    // const {handleSubmit} = this.props;
-
     const { classes } = this.props;
 
     return (
