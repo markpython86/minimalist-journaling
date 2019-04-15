@@ -19,6 +19,7 @@ export default {
     },
 
     updateDaily: function(id, dailyData) {
+      console.log(dailyData)
       return axios.put("/api/daily/" + id, dailyData);
 
     },

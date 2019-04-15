@@ -200,7 +200,9 @@ class App extends Component {
   }; 
 
   handleFormSubmit = (data) => {
-    if(this.state.dailies.find(daily => daily.fullDate === data.fullDate)){
+
+    const check = this.state.dailies.find(daily => daily.fullDate === data.fullDate)
+    if(check !== undefined){
       this.errorMessage()
     } else{
       API.saveDaily(data)
