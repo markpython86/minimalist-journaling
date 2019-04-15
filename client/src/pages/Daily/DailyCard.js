@@ -225,7 +225,7 @@ class DailyCard extends React.Component {
       habit3: this.state.habit3,
       selectedDate: this.state.selectedDate,
       oldValues:{
-      highlights: this.props.dailyHighlight,
+      highlights: this.props.Highlights,
       positive: this.props.positive,
       negative: this.props.negative,
       sleep: this.props.selectedTime2,

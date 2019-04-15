@@ -69,9 +69,11 @@ export default {
                     Weekly.findOneAndUpdate({ user_id: req.user._id, week: newDaily.week, year: newDaily.year },
                         { $push: { habits: { $each: [newDaily.habit1, newDaily.habit2, newDaily.habit3] } } })
                         .then(d => {
-                            const habits = []
-                            habits.push(newDaily.habit1, newDaily.habit2, newDaily.habit3)
+                           const habits = []
                             if (d === null) {
+                                habits.push(newDaily.habit1)
+                                habits.push(newDaily.habit2)
+                                habits.push(newDaily.habit3)
 
                                 const weekly = new Weekly({
                                     weekStart: Moment(req.body.selectedDate).startOf('week').format('MM/DD'),
@@ -108,8 +110,10 @@ export default {
                         { $push: { habits: { $each: [newDaily.habit1, newDaily.habit2, newDaily.habit3] } } })
                         .then(d => {
                             const habits = []
-                            habits.push(newDaily.habit1, newDaily.habit2, newDaily.habit3)
                             if (d == null) {
+                                habits.push(newDaily.habit1)
+                                habits.push(newDaily.habit2)
+                                habits.push(newDaily.habit3)
                                 const monthly = new Monthly({
                                     monthAt: Moment(req.body.selectedDate).format('MMMM'),
                                     month: newDaily.month,
@@ -120,10 +124,7 @@ export default {
                                     remember: '',
                                     start: '',
                                     stop: ''
-
-                                })
-
-
+                                });
                                 monthly.save(function (err, savedMonthly) {
                                     if (err) {
                                         return next(err)
@@ -161,17 +162,59 @@ export default {
 
         const dailyId = req.params.id;
         const newDaily = {
-            ...req.body,
+            highlights: req.body.highlights,
+            positive: req.body.positive,
+            negative: req.body.negative,
+            sleep: req.body.sleep,
+            wakeup: req.body.wakeup,
+            habit1: req.body.habit1,
+            habit2: req.body.habit2,
+            habit3: req.body.habit3,
+            selectedDate: req.body.selectedDate,
             week: parseInt(Moment(req.body.selectedDate).format('w') - 1),
             year: parseInt(Moment(req.body.selectedDate).format('YYYY'))
         }
 
 
         Daily.findByIdAndUpdate(dailyId, newDaily)
-            .then(newDaily => {
-                Weekly.findOne({ user_id: newDaily.user_id }
+            .then(newDaily1 => {
+                Weekly.findOne({ user_id: newDaily1.user_id, week: newDaily1.week, year: newDaily1.year }
                 )
                     .then(data => {
+                        const habits = []
+                            if (data === null) {
+                                habits.push(newDaily.habit1)
+                                habits.push(newDaily.habit2)
+                                habits.push(newDaily.habit3)
+                                const weekly = new Weekly({
+                                    weekStart: Moment(req.body.selectedDate).startOf('week').format('MM/DD'),
+                                    weekEnd: Moment(req.body.selectedDate).endOf('week').format('MM/DD'),
+                                    week: newDaily.week,
+                                    year: newDaily.year,
+                                    month: newDaily.month,
+                                    user_id: req.user._id,
+                                    habits: habits,
+                                    best: '',
+                                    worst: '',
+                                    nextWeek: ''
+
+                                })
+
+
+                                weekly.save(function (err, savedWeekly) {
+                                    if (err) {
+                                        return next(err)
+                                    }
+                                }).then(newWeekly => {
+                                    User.findByIdAndUpdate({ _id: req.user._id }, { $push: { weekly: newWeekly._id } })
+                                        .then()
+                                        .catch(err => console.log(err))
+
+                                })
+                                    .catch(next)
+                            
+
+                            } else {
                         Weekly.updateOne({ _id: data._id, habits: req.body.oldValues.habit1 }, { $set: { "habits.$": req.body.habit1 } })
                             .then()
                             .catch(err => console.log('err', err))
@@ -181,11 +224,39 @@ export default {
                         Weekly.updateOne({ _id: data._id, habits: req.body.oldValues.habit3 }, { $set: { "habits.$": req.body.habit3 } })
                             .then()
                             .catch(err => console.log('err', err))
-
+                            }
                     }).catch(err => console.log('err', err));
-                Monthly.findOne({ user_id: newDaily.user_id }
+                Monthly.findOne({ user_id: newDaily1.user_id, month: newDaily1.month, year: newDaily1.year }
                 )
                     .then(data => {
+                        const habits = []
+                            if (data == null) {
+                                habits.push(newDaily.habit1)
+                                habits.push(newDaily.habit2)
+                                habits.push(newDaily.habit3)
+                                const monthly = new Monthly({
+                                    monthAt: Moment(req.body.selectedDate).format('MMMM'),
+                                    month: newDaily.month,
+                                    week: newDaily.week,
+                                    year: newDaily.year,
+                                    user_id: req.user._id,
+                                    habits: habits,
+                                    remember: '',
+                                    start: '',
+                                    stop: ''
+                                });
+                                monthly.save(function (err, savedMonthly) {
+                                    if (err) {
+                                        return next(err)
+                                    }
+                                }).then(newMonthly => {
+                                    User.findByIdAndUpdate({ _id: req.user._id }, { $push: { monthly: newMonthly._id } })
+                                        .then()
+                                        .catch(err => console.log(err))
+
+                                }).catch(next)
+
+                            } else{
                         Monthly.updateOne({ _id: data._id, habits: req.body.oldValues.habit1 }, { $set: { "habits.$": req.body.habit1 } })
                             .then()
                             .catch(err => console.log('err', err))
@@ -195,6 +266,7 @@ export default {
                         Monthly.updateOne({ _id: data._id, habits: req.body.oldValues.habit3 }, { $set: { "habits.$": req.body.habit3 } })
                             .then()
                             .catch(err => console.log('err', err))
+                            }
                     }).catch(err => console.log('err', err))
                 res.sendStatus(200);
             })

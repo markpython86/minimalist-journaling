@@ -8,6 +8,7 @@ if(process.env.NODE_ENV != 'production'){
 module.exports = {
   jwt_secret: process.env.JWT_SECRET || 'unsafe_jwt_secret',
   mongoose: {
-    uri:  process.env.MONGODB_URI || 'mongodb://localhost/mern-stack'
+    // process.env.MONGODB_URI || 
+    uri:  'mongodb://localhost/mern-stack'
   },
 }
